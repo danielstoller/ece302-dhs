@@ -1,9 +1,16 @@
+/**@file bag_simple.hpp*/
+/**This is the derived class of abstract bag.
+ * Its purpose is...*/
+/**@author Daniel Stoller*/
+/**@date 1.22.2023*/
+
+
 #ifndef STUDENT_BAG_HPP
 #define STUDENT_BAG_HPP
 
 #include "abstract_bag.hpp"
 
-template<typename T> class Bag{
+template<typename T> class Bag : public AbstractBag{
 public:
 
   Bag();

@@ -1,3 +1,9 @@
+/**@file bag_simple.tpp*/
+/**This is the derived class of abstract bag.
+ * Its purpose is...*/
+/**@author Daniel Stoller*/
+/**@date 1.22.2023*/
+
 #include "bag_simple.hpp"
 
 #include <iostream>
