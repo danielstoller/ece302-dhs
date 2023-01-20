@@ -3,9 +3,9 @@
 
 #include <cstdlib>
 
-
 template<typename T> class AbstractBag{
 
+public:
   virtual std::size_t getCurrentSize() const = 0;
 
   virtual bool isEmpty() const = 0;
@@ -22,6 +22,7 @@ template<typename T> class AbstractBag{
 
   virtual static const std::size_t MAXSIZE = 100 = 0;
 
+private:
 };
 
 #endif
