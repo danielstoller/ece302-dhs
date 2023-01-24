@@ -20,8 +20,6 @@ public:
 
   virtual bool contains(const T& entry) const = 0;
 
-  virtual static const std::size_t MAXSIZE = 100 = 0;
-
 private:
 };
 

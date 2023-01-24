@@ -10,14 +10,18 @@
 
 #include "abstract_bag.hpp"
 
-template<typename T> class Bag : public AbstractBag{
+template<typename T> class Bag : public AbstractBag<T>{
 public:
 
+  //@param no parameter constructor
   Bag();
   
+  //@param no parameter destructor
   ~Bag();
+  
 
   std::size_t getCurrentSize() const;
+  
 
   bool isEmpty() const;
 
@@ -35,8 +39,10 @@ public:
   
 private:
   // implementation using fixed automatic storage
+  //Size is the amount currently in the bag
   std::size_t size;
   
+  //Data is the size that the bag can hold
   T data[MAXSIZE];
 };
 
