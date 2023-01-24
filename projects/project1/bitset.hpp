@@ -90,10 +90,10 @@ public:
 private:
 
   //true if valid, false if not valid
-  unsigned int bitsetSize;
+  intmax_t bitsetSize;
   //Dynamically allocated array of ints
   //Must be deallocated
-  int* bitset = new int[bitsetSize];
+  int* bitset = nullptr;
   //Starts the array as valid, becomes false if it breaks a rule
   bool isValid;
 };

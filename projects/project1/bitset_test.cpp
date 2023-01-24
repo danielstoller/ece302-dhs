@@ -130,9 +130,12 @@ TEST_CASE( "Test set negative number", "[bitset]" ) {
 TEST_CASE( "Test set with size too big", "[bitset]" ) {
     std::string s("00010");
     Bitset b(5);
+    b.reset(4);
     b.reset(8);
-    b.reset(8);
+    b.toggle(-2);
+    b.toggle(3);
     REQUIRE(b.size() == 5);
     REQUIRE_FALSE(b.good());
     REQUIRE(b.asString().compare(s) == 0);
 }
+

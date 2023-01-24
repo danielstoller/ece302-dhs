@@ -2,32 +2,45 @@
 using namespace std;
 
 Bitset::Bitset() : bitsetSize(8), isValid(true) {
-    //8 bits per bitset
-    unsigned int bitsetSize = 8;
+   
+    bitset = new int[8];
     //All bits are 0
-    for(unsigned int i=0; i<bitsetSize; i++)
+    for(intmax_t i=0; i<bitsetSize; i++)
         reset(i);
 }
 
-Bitset::Bitset(intmax_t size) : bitsetSize(size), isValid(true) {
+Bitset::Bitset(intmax_t size) : isValid(true) {
+    
     //If N<=0, invalid
     if(size<=0) isValid = false;
-        else isValid = true;
+    bitsetSize = abs(size);
+    
+    bitset = new int[bitsetSize];
+
+    
     
     //All bits are 0
-    for(unsigned int i=0; i<bitsetSize; i++)
+    for(intmax_t i=0; i<bitsetSize; i++)
         reset(i);
 }
 
-Bitset::Bitset(const std::string & value) : isValid(true) {
-    //Set bitset to the size of the string
-    bitsetSize = value.length();
+Bitset::Bitset(const std::string & value) : bitsetSize(value.length()),  isValid(true) {
+    
+    bitset = new int[bitsetSize];
 
     //Loop to add each string bit into the bitset
     for(int i=0; i<value.length(); i++){
-        if((value[i] == '0")  &&  (value[i] == "1"))
-            isValid = false;
-        else bitset[i] = value[i];
+        
+        //If character is a 0
+        if(value.at(i) == '0')
+            bitset[i] = 0;
+
+        //If character is a 1
+        else if(value.at(i) == '1')
+            bitset[i] = 1;
+
+        //If a character is neither
+        else isValid = false; 
     }
 
 }
@@ -81,8 +94,8 @@ Bitset::~Bitset()
             bitset[index] = 1;
         else if(bitset[index] == 1)
             bitset[index] = 0;
-        else isValid = false;
     }
+    else isValid = false;
   }
 
   //** Check Function
@@ -92,7 +105,10 @@ Bitset::~Bitset()
   bool Bitset::test(intmax_t index){
     if(0<=index && index<=(bitsetSize-1)) 
         return bitset[index];
-    else return false;
+    else{
+         isValid = false;
+         return false;
+    }
   }
 
   //** Accessor Function with return in different variable type
@@ -103,7 +119,7 @@ Bitset::~Bitset()
     //Declare new string
     std::string bitString;
     //Turn each bit into a string (cases for 0 and 1)
-    for(unsigned int i=0; i<bitsetSize; i++){
+    for(intmax_t i=0; i<bitsetSize; i++){
         if(bitset[i] == 0)
             bitString += "0";
         else if(bitset[i] == 1)
