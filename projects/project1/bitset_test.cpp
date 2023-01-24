@@ -5,6 +5,9 @@
 #include <iostream>
 #include "bitset.hpp"
 
+
+////BITSET IS VALID////
+
 TEST_CASE( "Test bitset default construction", "[bitset]" ) {
 
     Bitset b;  
@@ -83,4 +86,53 @@ TEST_CASE( "Test combined", "[bitset]" ) {
         REQUIRE_FALSE(b.test(i + (1<<10)));
         REQUIRE(((b.test(i + (1<<11)) == true && s.at(i + (1<<11)) == '0') || (b.test(i + (1<<11)) == false && s.at(i + (1<<11)) == '1')));
     }
+}
+
+
+
+////BITSET IS INVALID////
+
+
+
+TEST_CASE( "Test bitset negative size", "[bitset]" ) {
+    Bitset b(-2);
+    REQUIRE_FALSE(b.good());
+}
+
+TEST_CASE( "Test bitset zero size", "[bitset]" ) {
+    Bitset b(0);
+    REQUIRE_FALSE(b.good());
+}
+
+TEST_CASE( "Test bitset construction string with different characters", "[bitset]" ) {
+    std::string s("0010111000011000001101000002");
+    Bitset b(s);
+    REQUIRE_FALSE(b.good());
+}
+
+TEST_CASE( "Test bitset construction string with a space", "[bitset]" ) {
+    std::string s("00101110000110 00001101000002");
+    Bitset b(s);
+    REQUIRE_FALSE(b.good());
+}
+
+
+TEST_CASE( "Test set negative number", "[bitset]" ) {
+    std::string s("00010001");
+    Bitset b;
+    b.set(-1);
+    b.set(7);
+    REQUIRE(b.size() == 8);
+    REQUIRE_FALSE(b.good());
+}
+
+
+TEST_CASE( "Test set with size too big", "[bitset]" ) {
+    std::string s("00010");
+    Bitset b(5);
+    b.reset(8);
+    b.reset(8);
+    REQUIRE(b.size() == 5);
+    REQUIRE_FALSE(b.good());
+    REQUIRE(b.asString().compare(s) == 0);
 }
