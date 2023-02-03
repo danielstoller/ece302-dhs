@@ -44,8 +44,8 @@ public:
   bool contains(const T& item) const;
 
 private:
-
-  // TODO
+  unsigned int size;
+  T *bag = nullptr;
 };
 
 #include "dynamic_bag.tpp"

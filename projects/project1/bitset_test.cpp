@@ -107,6 +107,7 @@ TEST_CASE( "Test bitset zero size", "[bitset]" ) {
 TEST_CASE( "Test bitset construction string with different characters", "[bitset]" ) {
     std::string s("0010111000011000001101000002");
     Bitset b(s);
+    REQUIRE(b.asString().compare("001011100001100000110100000") == 0);
     REQUIRE_FALSE(b.good());
 }
 

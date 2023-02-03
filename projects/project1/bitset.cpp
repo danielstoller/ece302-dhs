@@ -29,7 +29,7 @@ Bitset::Bitset(const std::string & value) : bitsetSize(value.length()),  isValid
     bitset = new int[bitsetSize];
 
     //Loop to add each string bit into the bitset
-    for(int i=0; i<value.length(); i++){
+    for(int i=0; i<bitsetSize; i++){
         
         //If character is a 0
         if(value.at(i) == '0')
