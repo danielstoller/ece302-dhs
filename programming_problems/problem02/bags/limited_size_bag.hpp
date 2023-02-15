@@ -35,8 +35,8 @@ public:
   static const std::size_t maxsize = 100;
 
 private:
-  size_t size;
-  T *bag = nullptr;
+  std::size_t size;
+  T bag[100];
 };
 
 #include "limited_size_bag.tpp"

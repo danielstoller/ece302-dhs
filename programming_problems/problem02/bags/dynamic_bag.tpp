@@ -54,12 +54,12 @@ bool DynamicBag<T>::add(const T& item)
     bag[i] = oldBag[i];
   
   //Add new item to the bag
-  bag[size] = item;
+  bag[size-1] = item;
 
   //Deallocate the copy
   delete [] oldBag;
 
-  if(bag[size] == item)
+  if(bag[size-1] == item)
     return true;
   else 
     return false;
@@ -170,5 +170,5 @@ std::size_t DynamicBag<T>::getFrequencyOf(const T & item) const
       itemCount++;
   }
 
-  return 0;
+  return itemCount;
 };

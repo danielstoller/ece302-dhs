@@ -2,9 +2,8 @@
 
 template<typename T>
 LimitedSizeBag<T>::LimitedSizeBag() : size(0) 
-  {bag = new T[size];}
+  {}
   
-
 
 template<typename T>
 bool LimitedSizeBag<T>::add(const T& item)
@@ -13,29 +12,18 @@ bool LimitedSizeBag<T>::add(const T& item)
   if(size==100)
     return false;
 
-  //Create copy of the current bag
-  T* oldBag = bag;
-
   //Increase size by 1
   size++;
-  //Reallocate bag with one that is 1 bigger
-  bag = new T[size];
-
-  //Copy data from copy to the bag
-  for(unsigned int i=0; i<size; i++)
-    bag[i] = oldBag[i];
   
   //Add new item to the bag
-  bag[size] = item;
+  bag[size-1] = item;
 
-  //Deallocate the copy
-  delete [] oldBag;
-
-  if(bag[size] == item)
+  if(bag[size-1] == item)
     return true;
-  else 
+  else
     return false;
 }
+
 
 template<typename T>
 bool LimitedSizeBag<T>::remove(const T& item)
@@ -56,34 +44,21 @@ bool LimitedSizeBag<T>::remove(const T& item)
     }
   }
 
-  //Return False if there was no item
+  //If the item is in the last spot
   if(itemCount == 0)
     return false;
 
-
-  //Create copy of the current bag
-  T* oldBag = bag;
-
-  //Decrease size by 1
   size--;
-  //Reallocate bag with one that is 1 smaller
-  bag = new T[size];
 
-  //Copy data from copy to the bag
-  int j=0;
-  for(unsigned int i=0; i<size; i++){
-    //If the item in old bag is the item you want to remove
-    if(j==itemIndex)
-      j++;
-    //If the item is copied
-    else{
-      bag[i] = oldBag[j];
-      j++;
-    }
+  //If the remove item is now out of scope
+  if(itemIndex == size){
+    return true;
   }
 
-  //Deallocate the copy
-  delete [] oldBag;
+  //Move all the items down 1 spot after the item was removed
+  for(unsigned int i=itemIndex; i<size; i++){
+    bag[i] = bag[i+1];
+  }
 
   return true;
 }
@@ -107,6 +82,8 @@ std::size_t LimitedSizeBag<T>::getCurrentSize() const
 template<typename T>
 bool LimitedSizeBag<T>::contains(const T& item) const
 {  
+  if(size==0) return false;
+
   for(unsigned int i=0; i<size; i++){
     if(bag[i]==item)
       return true;
@@ -117,16 +94,16 @@ bool LimitedSizeBag<T>::contains(const T& item) const
 
 template<typename T>
 void LimitedSizeBag<T>::clear()
-  {size = 0; bag = new T[size];}
+  {size = 0;}
 
 
 template<typename T>
 std::size_t LimitedSizeBag<T>::getFrequencyOf(const T & item) const
 {
-  int itemCount = 0;
+  std::size_t itemCount = 0;
   for(unsigned int i=0; i<size; i++){
     if(bag[i]==item)
       itemCount++;
     }
-  return itemCount;
+    return itemCount;
 };
