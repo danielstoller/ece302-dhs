@@ -32,6 +32,8 @@ static bool checkVector(vector<string> vect){
 	return true;
 }
 
+
+
 // helper function to convert string to lower case
 //This function permenantly changes a word
 static void convertToLowerCase(string & value)
@@ -82,7 +84,8 @@ void FindPalindrome::recursiveFindPalindromes(vector<string> candidateStringVect
 		if(isPalindrome(toString(candidateStringVector)))
 		{
 			palindromeCount++;
-			solutions[palindromeCount] = candidateStringVector;
+			for(int i=0; i<candidateStringVector.size(); i++)
+				solutions[palindromeCount][i] = candidateStringVector[i];
 		}
 	}
 }
@@ -138,13 +141,8 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 
 
 	//Create a string that holds all the words in the vector
-
-	string word, allWords;
-	for(int i=0; i<stringVector.size(); i++){
-		word = stringVector[i];
-		convertToLowerCase(word);
-		allWords += word;
-	}
+	string allWords = toString(stringVector);
+	
 	
 	//This variable stores the size of allWords
 	int allWordsSize = allWords.size();
@@ -160,7 +158,8 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 
 	for(int i=0; i<allWordsSize; i++){
 		//Next cycle will start if the letter has been used before
-		while(!used)
+		while(!used){
+
 
 		//See if the letter at index i has been counted before
 		for(int j=0; j<usedLetters.size(); j++){
@@ -169,18 +168,22 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 				used = true;
 		}//end cycling through used letters
 
+
 		//Count how many times this letter is in the string. Reset at 0 when i++
 		letterCount = 0;
-		
 		//Anything before i has already been used, so start at i
-		for(int j=i; j<allWordsSize; i++){
+		for(int j=i; j<allWordsSize; j++){
 			if(allWords[i] == allWords[j])
+				//Increment the amount of times the letter is in the sentence
 				letterCount++;
 		}
 		//If letter count is odd, add to the odd count
 		if(letterCount % 2)
 			oddCount++;
-
+		
+		//leave the loop
+		used = true;
+		}
 	}//end cycling through all the strings
 
 	
@@ -217,9 +220,11 @@ bool FindPalindrome::add(const string & value)
 			return false;
 	}
 
+
 	//If this word is already in the list, return false
 	string word;
 	string newWord = value;
+
 	for(int i=0; i<wordCount; i++){
 		//Iterate through wordList
 		word = wordList[i];
@@ -227,20 +232,25 @@ bool FindPalindrome::add(const string & value)
 		//If the new word is already on the list, return an error
 		convertToLowerCase(newWord);
 		convertToLowerCase(word);
+
 		if(word == newWord){
 			//Send an error
 			return false;
 		}
 	}
 	
+
 	//Add unique word to word list
 	wordList.push_back(value);
 	wordCount++;
 
+
 	//Update the solutions palindrome with the new word if they pass the cut tests
 	vector<string> emptyVector;
+	vector<string> wordListCopy = wordList;
+	
 	if(cutTest1(wordList) & cutTest2(emptyVector,emptyVector))		////**TAKE OUT EMPTY VECTOR ONCE CUTTEST 2 IS DONE
-		recursiveFindPalindromes(emptyVector, wordList);
+		recursiveFindPalindromes(emptyVector, wordListCopy);
 	
 	return true;
 
@@ -274,16 +284,17 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 	}
 	
 
-	//Add all new words to word list
+	//Add all new words to word list and update word count
 	wordCount += stringVector.size();
-	for(int i=0; i<stringVector.size(); i++)
+	for(int i=0; i<stringVector.size(); i++){
 		wordList.push_back(stringVector[i]);
-
+	}
 
 	//Update the solutions palindrome with the new word if they pass the cut tests
 	vector<string> emptyVector;
+	vector<string> wordListCopy = wordList;
 	if(cutTest1(wordList) & cutTest2(emptyVector,emptyVector))		////**TAKE OUT EMPTY VECTOR ONCE CUTTEST 2 IS DONE
-		recursiveFindPalindromes(emptyVector, wordList);
+		recursiveFindPalindromes(emptyVector, wordListCopy);
 	
 	return true;
 }
