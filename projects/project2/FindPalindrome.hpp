@@ -4,12 +4,19 @@
 #include <string>
 #include <vector>
 
+using std::string;
+using std::vector;
+
 class FindPalindrome{
 
 private:
 	// private stuff that you define and implement goes here...
-	
-	// ...
+
+	vector<string> wordList;
+	unsigned int wordCount;
+
+	vector<vector<string>> solutions;
+	unsigned int palindromeCount;
 	
 	// private stuff that you are given or is specified in the project
 	// description...
@@ -21,11 +28,7 @@ private:
 	void recursiveFindPalindromes(std::vector<std::string> candidateStringVector, 
 			   	                  std::vector<std::string> currentStringVector);
 	
-	/** function to see if a string is a palindrome (provided).
-	  You may use the provided function, write your own, or use one of the billions
-	  of palindrome functions available on the Internet. Note: you probably 
-	  do not want to use a recursive version for this test (as it is 
-	  inefficient). You may change the signature of this function. */
+	// Function to see if a string is a palindrome (provided).
 	bool isPalindrome(std::string currentString) const;
 	
 public:
@@ -58,9 +61,8 @@ public:
 	bool add(const std::string & value);
 	
 	/** Adds a new vector of strings to this FindPalindrome instance and
-	   computes the number of palindrome sentences possible. Note: You may
-	   not implement this method by repeatedly calling the add(string) method
-	   as this would be very inefficient. Implementing this method by repeatedly
+	   computes the number of palindrome sentences possible. 
+	   //Note: You may not implement this method by repeatedly calling the add(string) method.
 	   calling add(string) will result in a grade of zero for the project. Again,
 	   note that the strings added must be unique per the project description.
 	   @post  If successful, the vector of strings has been added to the 
