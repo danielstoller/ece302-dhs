@@ -21,13 +21,23 @@ static string toString(vector<string> vect){
 }
 	
 
+//Takes a vector of strings and sorts through all the characters in the strings to see if they're all letters
+static bool checkVector(vector<string> vect){
+	string stringVector = toString(vect);
+
+	for(int i=0; stringVector.size(); i++){
+		if(!isalpha(stringVector[i]))
+			return false;
+	}
+	return true;
+}
+
 // helper function to convert string to lower case
 //This function permenantly changes a word
 static void convertToLowerCase(string & value)
 {
-	for (int i=0; i<value.size(); i++) {
+	for (int i=0; i<value.size(); i++)
 		value[i] = tolower(value[i]);
-	}
 }
 
 //------------------- PRIVATE CLASS METHODS ------------------------------------
@@ -69,13 +79,12 @@ void FindPalindrome::recursiveFindPalindromes(vector<string> candidateStringVect
 	//We only want to see if the candidate string is a palendrome when candidateStringVector has all the words in it
 	else{ 
 		//Only add this candidateStringVector to the solutions if it is a palendrome
-		if(isPalindrome(toString(candidateStringVector))){
+		if(isPalindrome(toString(candidateStringVector)))
+		{
 			palindromeCount++;
 			solutions[palindromeCount] = candidateStringVector;
 		}
-
 	}
-	return;
 }
 
 // private function to determine if a string is a palindrome (given, you
@@ -193,7 +202,7 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
                               const vector<string> & stringVector2)
 {
 	// TODO need to implement this...
-	return false;
+	return true;
 }
 
 
@@ -202,6 +211,12 @@ bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
 
 bool FindPalindrome::add(const string & value)
 {
+	//If the word is not only full of letters, return false
+	for(int i=0; i<value.size(); i++){
+		if(!isalpha(value[i]))
+			return false;
+	}
+
 	//If this word is already in the list, return false
 	string word;
 	string newWord = value;
@@ -227,15 +242,20 @@ bool FindPalindrome::add(const string & value)
 	if(cutTest1(wordList) & cutTest2(emptyVector,emptyVector))		////**TAKE OUT EMPTY VECTOR ONCE CUTTEST 2 IS DONE
 		recursiveFindPalindromes(emptyVector, wordList);
 	
+	return true;
 
 }
 
 bool FindPalindrome::add(const vector<string> & stringVector)
 {
+	//If the word is not only full of letters, return false
+	if(!checkVector(stringVector))
+		return false;
+	
 	//If one of the words is already in the list, return false
 	string word;
 	string newWord;
-	for(int i=0; i<stringVector.size; i++){
+	for(int i=0; i<stringVector.size(); i++){
 			//Iterate through new words
 			newWord = stringVector[i];
 			
@@ -265,8 +285,7 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 	if(cutTest1(wordList) & cutTest2(emptyVector,emptyVector))		////**TAKE OUT EMPTY VECTOR ONCE CUTTEST 2 IS DONE
 		recursiveFindPalindromes(emptyVector, wordList);
 	
-
-	
+	return true;
 }
 
 
