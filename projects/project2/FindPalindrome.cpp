@@ -166,19 +166,12 @@ void FindPalindrome::clear()
 
 bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 {
-	//This variable stores the total amount of letters that show up an odd amount
-	int oddCount = 0;
-	//Putting a while loop in the front for efficiency
-	while(oddCount<2){
-
-
 	//Create a string that holds all the words in the vector
 	string allWords = toString(stringVector);
 	convertToLowerCase(allWords);
-	
-	
 	//This variable stores the size of allWords
 	int allWordsSize = allWords.size();
+
 
 
 	//This is used to count how many times an individual letter is in allWords
@@ -186,15 +179,13 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 	//This stores all the previously counted letters
 	string usedLetters = "";
 	//This is used to end a cycle if the letter has been used
-	bool used = false;
+	bool used;
+	//This variable stores the total amount of letters that show up an odd amount
+	int oddCount = 0;
 
 
 	for(int i=0; i<allWordsSize; i++){
 		used = false;
-		//Next cycle will start if the letter has been used before
-		while(!used){
-
-
 		//See if the letter at index i has been counted before
 		for(int j=0; j<usedLetters.size(); j++){
 			if(allWords[i] == usedLetters[j])
@@ -202,22 +193,22 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 				used = true;
 		}//end cycling through used letters
 		
-
-		//Count how many times this letter is in the string. Reset at 0 when i++
-		letterCount = 0;
-		//Anything before i has already been used, so start at i
-		for(int j=i; j<allWordsSize; j++){
-			if(allWords[i] == allWords[j])
-				//Increment the amount of times the letter is in the sentence
-				letterCount++;
-		}
-		//If letter count is odd, add to the odd count
-		if(letterCount % 2)
-			oddCount++;
-		
-		//Add the letter to the used letter list
-		usedLetters += allWords[i];
-		used = true;		//Have to make it true to leave the while loop
+		//Next for loop if used
+		if(!used){
+			//Count how many times this letter is in the string. Reset at 0 when i++
+			letterCount = 0;
+			//Anything before i has already been used, so start at i
+			for(int j=i; j<allWordsSize; j++){
+				if(allWords[i] == allWords[j])
+					//Increment the amount of times the letter is in the sentence
+					letterCount++;
+			}
+			//If letter count is odd, add to the odd count
+			if(letterCount % 2)
+				oddCount++;
+			
+			//Add the letter to the used letter list
+			usedLetters += allWords[i];
 		}
 	}//end cycling through all the characters in all the strings
 
@@ -230,10 +221,6 @@ bool FindPalindrome::cutTest1(const vector<string> & stringVector)
 	//If there are an even amount of total letters
 	else
 		return oddCount==0;
-	
-	}	//end while loop
-	//Will only be here if oddCount>1
-	return false;
 }
 
 bool FindPalindrome::cutTest2(const vector<string> & stringVector1,
@@ -337,6 +324,7 @@ bool FindPalindrome::add(const string & value)
 	return true;
 }
 
+
 bool FindPalindrome::add(const vector<string> & stringVector)
 {
 	//If the word is not only full of letters, return false
@@ -355,12 +343,11 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 	string word;
 	string newWord;
 	//Only cycle through the word list if there are words there
-	if(wordCount){
 	for(int i=0; i<stringVector.size(); i++){
 			//Iterate through new words
 			newWord = stringVector[i];
 			
-			for(int j=0; j<stringVector.size(); j++){
+			for(int j=0; j<wordCount; j++){
 				//Iterate through wordList
 				word = wordList[j];
 
@@ -374,7 +361,6 @@ bool FindPalindrome::add(const vector<string> & stringVector)
 			}
 
 		}
-	}
 	
 
 	//Add all new words to word list and update word count
